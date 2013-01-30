@@ -24,8 +24,9 @@ from PySide import QtCore, QtGui
 
 from subprocess import call
 from time import sleep
+from os import path
 
-imagepath = "images"
+imagepath = path.dirname(path.realpath(__file__))+"/images"
 
 class PulseAudio:
     pa = "pulseaudio"
