@@ -5,6 +5,7 @@ pa_systray monitors, whether pulseaudiois currently running or not.
 you can start/stop the server via by clicking on the icon (or via the context
 menu).
 
+
 LICENSE
 =======
 pa_systray is heavily based on the pyside systray example
@@ -13,12 +14,12 @@ http://qt.gitorious.org/pyside/pyside-examples/blobs/e5d379f38bf03406056e8b14af9
 Copyright © 2012 IOhannes m zmölnig <zmoelnig@umlaeute.mur.at>.
       forum::für::umläute
 
-pa-trayicon is free software; you can redistribute it and/or modify
+pa_systray is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as
 published by the Free Software Foundation; either version 2 of
 the License, or (at your option) any later version.
 
-pa-trayicon is distributed in the hope that it will be useful,
+pa_systray is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
