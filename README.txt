@@ -5,6 +5,12 @@ pa_systray monitors, whether pulseaudiois currently running or not.
 you can start/stop the server via by clicking on the icon (or via the context
 menu).
 
+USAGE
+=====
+simply run
+$ ./pa_systray
+
+image paths are currently hardcoded to 'images/' but you can change that in the source doe
 
 LICENSE
 =======
