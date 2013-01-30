@@ -85,6 +85,9 @@ class Window(QtGui.QDialog):
 
     def status(self, state):
         self.setIcon(state)
+        self.startAction.setEnabled(state!=0)
+        self.stopAction.setEnabled (state==0)
+
 
     def setIcon(self, index):
         #print index
