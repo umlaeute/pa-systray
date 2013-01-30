@@ -43,21 +43,52 @@ from PySide import QtCore, QtGui
 import systray_rc
 
 from subprocess import call
-
+from threading import Thread
+from threading import Event
+from time import sleep
 
 class PulseAudio:
-    #exec="pulseaudio"
+    pa = "pulseaudio"
     
     def __init__(self):
         print "Pulse"
 
     def check(self):
-        retval = call(["pulseaudio", "--check"])
+        retval = call([self.pa, "--check"])
+        print "Pulse checked %d" % (retval)
         return retval
 
+    def start(self):
+        retval = call([self.pa, "--start"])
+        print "Pulse started %d" % (retval)
+
+    def stop(self):
+        retval = call([self.pa, "--kill"])
+        print "Pulse stopped %d" % (retval)
+
+class PAmonitor(Thread):
+    
+    def __init__ (self,pa,win,interval=1):
+        Thread.__init__(self)
+        self.exit_event=Event()
+        self.pa=pa
+        self.win=win
+        self.interval=interval
+
+    def run(self):
+        while not self.exit_event.isSet():
+            state=self.pa.check()
+            self.win.status(state)
+            sleep(self.interval)
+
+    def exit(self):
+        self.exit_event.set()
+        self.join()
+        
 class Window(QtGui.QDialog):
     def __init__(self):
         super(Window, self).__init__()
+        self.pa = PulseAudio()
         self.createIconGroupBox()
         self.createActions()
         self.createTrayIcon()
@@ -65,12 +96,19 @@ class Window(QtGui.QDialog):
         self.trayIcon.activated.connect(self.iconActivated)
         self.setIcon(0)
         self.trayIcon.show()
+        self.monitor = PAmonitor(self.pa, self)
+        self.monitor.start()
 
     def start(self):
         print "start"
+        self.pa.start()
 
     def stop(self):
         print "stop"
+        self.pa.stop()
+
+    def status(self, state):
+        self.setIcon(state)
 
     def setIcon(self, index):
         print index
@@ -102,13 +140,17 @@ class Window(QtGui.QDialog):
         iconLayout.addWidget(self.showIconCheckBox)
         self.iconGroupBox.setLayout(iconLayout)
 
+    def quit(self):
+        self.monitor.exit()
+        QtGui.qApp.quit();
+
     def createActions(self):
         self.startAction = QtGui.QAction("Start", self,
                 triggered=self.start)
         self.stopAction = QtGui.QAction("Stop", self,
                 triggered=self.stop)
         self.quitAction = QtGui.QAction("&Quit", self,
-                triggered=QtGui.qApp.quit)
+                triggered=self.quit)
 
     def createTrayIcon(self):
          self.trayIconMenu = QtGui.QMenu(self)
@@ -128,5 +170,6 @@ if __name__ == '__main__':
         sys.exit(1)
     QtGui.QApplication.setQuitOnLastWindowClosed(False)
     window = Window()
+    print "start"
     #window.show()
     sys.exit(app.exec_())
