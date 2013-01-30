@@ -55,7 +55,7 @@ class PulseAudio:
 
     def check(self):
         retval = call([self.pa, "--check"])
-        print "Pulse checked %d" % (retval)
+        #print "Pulse checked %d" % (retval)
         return retval
 
     def start(self):
@@ -66,24 +66,21 @@ class PulseAudio:
         retval = call([self.pa, "--kill"])
         print "Pulse stopped %d" % (retval)
 
-class PAmonitor(Thread):
+class PAmonitor(QtCore.QThread):
+    dataReady = QtCore.Signal(int)
     
     def __init__ (self,pa,win,interval=1):
-        Thread.__init__(self)
-        self.exit_event=Event()
+        QtCore.QThread.__init__(self)
         self.pa=pa
         self.win=win
         self.interval=interval
 
     def run(self):
-        while not self.exit_event.isSet():
+        while True:
             state=self.pa.check()
-            self.win.status(state)
+            self.dataReady.emit(state)
             sleep(self.interval)
 
-    def exit(self):
-        self.exit_event.set()
-        self.join()
         
 class Window(QtGui.QDialog):
     def __init__(self):
@@ -97,6 +94,7 @@ class Window(QtGui.QDialog):
         self.setIcon(0)
         self.trayIcon.show()
         self.monitor = PAmonitor(self.pa, self)
+        self.monitor.dataReady.connect(self.status, QtCore.Qt.QueuedConnection)
         self.monitor.start()
 
     def start(self):
@@ -111,26 +109,25 @@ class Window(QtGui.QDialog):
         self.setIcon(state)
 
     def setIcon(self, index):
-        print index
+        #print index
         icon = self.iconComboBox.itemIcon(index)
         self.trayIcon.setIcon(icon)
         self.setWindowIcon(icon)
         self.trayIcon.setToolTip(self.iconComboBox.itemText(index))
 
     def iconActivated(self, reason):
-        print "activated"
         if reason in (QtGui.QSystemTrayIcon.Trigger, QtGui.QSystemTrayIcon.DoubleClick):
-            self.iconComboBox.setCurrentIndex(
-                    (self.iconComboBox.currentIndex() + 1)
-                    % self.iconComboBox.count())
+            if self.pa.check() == 0:
+                self.pa.stop()
+            else:
+                self.pa.start()
 
     def createIconGroupBox(self):
         self.iconGroupBox = QtGui.QGroupBox("Tray Icon")
         self.iconLabel = QtGui.QLabel("Icon:")
         self.iconComboBox = QtGui.QComboBox()
-        self.iconComboBox.addItem(QtGui.QIcon(':/images/bad.svg'), "Bad")
-        self.iconComboBox.addItem(QtGui.QIcon(':/images/heart.svg'), "Heart")
-        self.iconComboBox.addItem(QtGui.QIcon(':/images/trash.svg'), "Trash")
+        self.iconComboBox.addItem(QtGui.QIcon('images/running.svg'), "pulseaudio running")
+        self.iconComboBox.addItem(QtGui.QIcon('images/stopped.svg'), "pulseaudio stopped")
         self.showIconCheckBox = QtGui.QCheckBox("Show icon")
         self.showIconCheckBox.setChecked(True)
         iconLayout = QtGui.QHBoxLayout()
