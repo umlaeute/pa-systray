@@ -50,8 +50,8 @@ from time import sleep
 class PulseAudio:
     pa = "pulseaudio"
     
-    def __init__(self):
-        print "Pulse"
+    #def __init__(self):
+    #    #print "Pulse"
 
     def check(self):
         retval = call([self.pa, "--check"])
@@ -60,11 +60,11 @@ class PulseAudio:
 
     def start(self):
         retval = call([self.pa, "--start"])
-        print "Pulse started %d" % (retval)
+        #print "Pulse started %d" % (retval)
 
     def stop(self):
         retval = call([self.pa, "--kill"])
-        print "Pulse stopped %d" % (retval)
+        #print "Pulse stopped %d" % (retval)
 
 class PAmonitor(QtCore.QThread):
     dataReady = QtCore.Signal(int)
@@ -98,11 +98,9 @@ class Window(QtGui.QDialog):
         self.monitor.start()
 
     def start(self):
-        print "start"
         self.pa.start()
 
     def stop(self):
-        print "stop"
         self.pa.stop()
 
     def status(self, state):
@@ -167,6 +165,5 @@ if __name__ == '__main__':
         sys.exit(1)
     QtGui.QApplication.setQuitOnLastWindowClosed(False)
     window = Window()
-    print "start"
     #window.show()
     sys.exit(app.exec_())
