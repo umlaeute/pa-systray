@@ -10,7 +10,7 @@ USAGE
 simply run
 $ ./pa_systray
 
-image paths are currently hardcoded to 'images/' but you can change that in the source doe
+image paths are currently hardcoded to 'images/' but you can change that in the source code
 
 LICENSE
 =======
