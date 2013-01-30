@@ -40,12 +40,11 @@
 #import sip
 #sip.setapi('QVariant', 2)
 from PySide import QtCore, QtGui
-import systray_rc
 
 from subprocess import call
-from threading import Thread
-from threading import Event
 from time import sleep
+
+imagepath = "images"
 
 class PulseAudio:
     pa = "pulseaudio"
@@ -124,8 +123,8 @@ class Window(QtGui.QDialog):
         self.iconGroupBox = QtGui.QGroupBox("Tray Icon")
         self.iconLabel = QtGui.QLabel("Icon:")
         self.iconComboBox = QtGui.QComboBox()
-        self.iconComboBox.addItem(QtGui.QIcon('images/running.svg'), "pulseaudio running")
-        self.iconComboBox.addItem(QtGui.QIcon('images/stopped.svg'), "pulseaudio stopped")
+        self.iconComboBox.addItem(QtGui.QIcon(imagepath+'/running.svg'), "pulseaudio running")
+        self.iconComboBox.addItem(QtGui.QIcon(imagepath+'/stopped.svg'), "pulseaudio stopped")
         self.showIconCheckBox = QtGui.QCheckBox("Show icon")
         self.showIconCheckBox.setChecked(True)
         iconLayout = QtGui.QHBoxLayout()
