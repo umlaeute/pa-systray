@@ -54,12 +54,18 @@ class PAmonitor(QtCore.QThread):
         self.pa=pa
         self.win=win
         self.interval=interval
+        self.keepRunning = True
 
     def run(self):
-        while True:
+        while self.keepRunning:
             state=self.pa.check()
             self.dataReady.emit(state)
             sleep(self.interval)
+
+    def shutdown(self):
+        self.keepRunning=False
+        sleep(self.interval*2)
+        self.quit()
 
         
 class Window(QtGui.QDialog):
@@ -119,7 +125,7 @@ class Window(QtGui.QDialog):
         self.iconGroupBox.setLayout(iconLayout)
 
     def quit(self):
-        self.monitor.exit()
+        self.monitor.shutdown()
         QtGui.qApp.quit();
 
     def createActions(self):
