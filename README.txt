@@ -12,6 +12,17 @@ $ ./pa_systray
 
 image paths are currently hardcoded to 'images/' but you can change that in the source code
 
+DEPENDENCIES
+============
+pa_systray depends is written in python and uses Qt.
+you need "PySide" (Qt-bindings for python) in order to run it.
+pa_systray uses the `pulseaudio` cmdline tool to start/stop/check the
+pulseaudio server.
+
+on debian, you can simply do:
+# aptitude install python-pyside.qtcore python-pyside.qtgui
+# aptitude install pulseaudio
+
 LICENSE
 =======
 pa_systray is heavily based on the pyside systray example
