@@ -1,9 +1,30 @@
 pa_systray - minimal systray app to monitor pulseaudio server
 =============================================================
 
-pa_systray monitors, whether pulseaudiois currently running or not.
+pa_systray monitors, whether pulseaudio is currently running or not.
 you can start/stop the server via by clicking on the icon (or via the context
 menu).
+
+OBJECTIVE
+=========
+my preferred audio-API is JACK (the low-latency "pro"-audio framework on linux).
+this works great for all kinds of audio-software (ardour, Pure Data,
+Supercollider,...) but doesn't really work with many desktop-applications,
+including my favourite browser.
+otoh, virtually all "standard" desktop-applications support pulseaudio these days.
+in order to keep my audio-system as low-latency as possible AND at the same time
+be able to easily use audio-output of my desktop-applications, i have decided to
+run pulseaudio on top of jack (that is: pulseaudio is an ordinary jack client),
+as described 
+[here](https://wiki.archlinux.org/index.php/PulseAudio/Examples#Pulseaudio_through_JACK_the_old_way).
+i also like to be able to get rid of pulseaudio whenever i feel that i want to
+go "pro" completely.
+`pa_systray` allows me to turn off pulseaudio whenever i feel like it.
+
+`pasuspender` is not very appealing to me, as it makes working with my favourite
+sound programs the exception, rather than the default (also, i have to decide to
+suspend pa for the entire run-cycle of my sound programs, which can be days)
+
 
 USAGE
 =====
