@@ -11,11 +11,12 @@ my preferred audio-API is JACK (the low-latency "pro"-audio framework on linux).
 this works great for all kinds of audio-software (ardour, Pure Data,
 Supercollider,...) but doesn't really work with many desktop-applications,
 including my favourite browser.
-otoh, virtually all "standard" desktop-applications support pulseaudio these days.
+otoh, virtually all "standard" desktop-applications support pulseaudio these
+days.
 in order to keep my audio-system as low-latency as possible AND at the same time
 be able to easily use audio-output of my desktop-applications, i have decided to
 run pulseaudio on top of jack (that is: pulseaudio is an ordinary jack client),
-as described 
+as described
 [here](https://wiki.archlinux.org/index.php/PulseAudio/Examples#Pulseaudio_through_JACK_the_old_way).
 i also like to be able to get rid of pulseaudio whenever i feel that i want to
 go "pro" completely.
@@ -23,7 +24,7 @@ go "pro" completely.
 
 `pasuspender` is not very appealing to me, as it makes working with my favourite
 sound programs the exception, rather than the default (also, i have to decide to
-suspend pa for the entire run-cycle of my sound programs, which can be days)
+suspend pa for the entire run-cycle of my sound programs, which can be days).
 
 
 USAGE
@@ -31,7 +32,8 @@ USAGE
 simply run
 $ ./pa_systray
 
-image paths are currently hardcoded to 'images/' but you can change that in the source code
+image paths are currently hardcoded to 'images/' but you can change that in the
+source code.
 
 DEPENDENCIES
 ============
@@ -49,8 +51,8 @@ LICENSE
 pa_systray is heavily based on the pyside systray example
 http://qt.gitorious.org/pyside/pyside-examples/blobs/e5d379f38bf03406056e8b14af95ae36a0a1de08/examples/desktop/systray/systray.py
 
-Copyright © 2012 IOhannes m zmölnig <zmoelnig@umlaeute.mur.at>.
-      forum::für::umläute
+Copyright Â© 2012 IOhannes m zmÃ¶lnig <zmoelnig@umlaeute.mur.at>.
+      forum::fÃ¼r::umlÃ¤ute
 
 pa_systray is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as
@@ -66,5 +68,5 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 the images are taken from the pulseaudio website, and are:
-    Copyright © Pierre Ossman <ossman@cendio.se> for Cendio AB
+    Copyright Â© Pierre Ossman <ossman@cendio.se> for Cendio AB
 and licensed under the terms of the GNU General Public License 2.0
