@@ -43,7 +43,7 @@ pa_systray uses the `pulseaudio` cmdline tool to start/stop/check the
 pulseaudio server.
 
 on debian, you can simply do:
-# aptitude install python-pyside.qtcore python-pyside.qtgui
+# aptitude install python-pyside.qtcore python-pyside.qtgui python-pyside.qtsvg
 # aptitude install pulseaudio
 
 LICENSE
